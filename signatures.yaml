@@ -1,0 +1,33 @@
+utilities:
+
+  - id: GNU Privacy Guard (GPG)
+    regex: "gpg|gnupg|gpg4win|gpgtools"
+
+  - id: OpenPGP
+    regex: "openpgp"
+
+operating_systems:
+
+  - id: Fedora Linux
+    regex: "fedora"
+
+  - id: Ubuntu Linux
+    regex: "ubuntu"
+
+  - id: Debian Linux
+    regex: "debian"
+
+  - id: Arch Linux
+    regex: "archlinux"
+
+  - id: CentOS Linux
+    regex: "centos"
+
+  - id: Red Hat Enterprise Linux
+    regex: "redhat|rhel"
+
+  - id: macOS
+    regex: "macos|darwin|osx|macbook|imac|macmini"
+
+  - id: Microsoft Windows
+    regex: "DESKTOP-"
