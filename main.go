@@ -203,22 +203,34 @@ func ProcessCommits(items []CommitItem, cfg *Config, blacklist []*regexp.Regexp)
 			commitDate = t.Format("2006-01-02 15:04:05 MST")
 		}
 
-		for _, email := range []string{c.Commit.Author.Email, c.Commit.Committer.Email} {
-			if IsValidEmail(email) && !IsBlacklisted(email, blacklist) {
-				fmt.Printf("Detected email: %s\n", email)
+		// Emails (with names)
+		for _, who := range []struct {
+			Name  string
+			Email string
+		}{
+			{c.Commit.Author.Name, c.Commit.Author.Email},
+			{c.Commit.Committer.Name, c.Commit.Committer.Email},
+		} {
+			if IsValidEmail(who.Email) && !IsBlacklisted(who.Email, blacklist) {
+				fmt.Printf("Email: %s\n", who.Email)
+				fmt.Printf("Name: %s\n", who.Name)
 				fmt.Printf("Date: %s\n", commitDate)
 				fmt.Printf("Location: %s\n\n", c.HTMLURL)
 			}
 		}
 
+		// Operating systems
 		for _, m := range SearchPatterns(commitText, cfg.OperatingSystems) {
-			fmt.Printf("Detected Operating System(s): %s\n", m)
+			fmt.Printf("Operating System(s): %s\n", m)
+			fmt.Printf("Email: %s\n", c.Commit.Author.Email)
 			fmt.Printf("Date: %s\n", commitDate)
 			fmt.Printf("Location: %s\n\n", c.HTMLURL)
 		}
 
+		// Utilities
 		for _, m := range SearchPatterns(commitText, cfg.Utilities) {
 			fmt.Printf("Detected Utility: %s\n", m)
+			fmt.Printf("Committer: %s\n", c.Commit.Author.Email)
 			fmt.Printf("Date: %s\n", commitDate)
 			fmt.Printf("Location: %s\n\n", c.HTMLURL)
 		}
